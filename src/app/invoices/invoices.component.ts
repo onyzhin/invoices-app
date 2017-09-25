@@ -18,11 +18,8 @@ export class InvoicesComponent implements OnInit {
   ngOnInit() {
     this.invoicesService.getInvoices().subscribe(
       (invoices) => {
-        console.log(invoices);
         this.invoices = invoices;
-      })
-
-    // For better perfomance it would be nice
+      });
   }
 
   removeInvoice(id) {
