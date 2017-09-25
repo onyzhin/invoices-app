@@ -1,3 +1,5 @@
+![Alt text](./invoice.png "invoice page")
+
 # Dependencies
 
 - sqlite3
