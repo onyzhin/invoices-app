@@ -1,3 +1,5 @@
+![Alt text](./invoice.png "invoice page")
+
 # Dependencies
 
 - sqlite3
@@ -5,7 +7,7 @@
 - npm
 - angular@4.2.4
 - angular-cli@1.4.3
-- bootstrap@4.0.0-alpha.6 (very latest version)
+- bootstrap@4.0.0-alpha.6
 
 # Getting Started
 
@@ -20,6 +22,7 @@
 
 ###### Viewing the application in your browser
 `http://localhost:8000`
+
 
 # Schema
 
