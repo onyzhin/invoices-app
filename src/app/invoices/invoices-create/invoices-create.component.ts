@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import "rxjs/add/operator/debounceTime";
@@ -70,7 +70,7 @@ export class InvoicesCreateComponent implements OnInit {
               .subscribe((items) => {
                 items.forEach((item) => {
                   let product = this.products.find((product) => product.id == item.id);
-                  this.invoice.items.push({...product, quantity: item.quantity})
+                  this.invoice.items.push({...product, quantity: item.quantity});
                 });
                 this.formAddControls();
               });
@@ -86,7 +86,9 @@ export class InvoicesCreateComponent implements OnInit {
     this.invoiceForm.valueChanges
       .debounceTime(1000)
       .subscribe(
-        () => this.saveInvoice()
+        () => {
+          this.saveInvoice()
+        }
       );
   }
 
@@ -133,7 +135,7 @@ export class InvoicesCreateComponent implements OnInit {
     this.saveInvoice();
   }
 
-  slideOnFinish(data) {
+  discountSelected(data) {
     this.invoice.discount = data.from;
     this.saveInvoice();
   }
@@ -148,36 +150,21 @@ export class InvoicesCreateComponent implements OnInit {
   }
 
   saveInvoice() {
-    if (this.invoiceForm.valid && this.invoice.items.length) {
-      let invoice = {
-        customer_id: this.invoice.customer_id,
-        discount: this.invoice.discount,
-        total: this.totalInvoice,
-        items: this.invoice.items.map(
-          (product: IProduct) => {
-            return {
-              product_id: product.id,
-              quantity: product.quantity,
-            };
-          }),
-      };
+    if (this.invoiceForm.valid &&
+      this.invoice.items.length) {
+      this.invoice.total = this.totalInvoice;
 
-      if (this.invoice.id) {
-        this.invoiceService.updateInvoice(invoice, this.invoice.id).subscribe(
+      if (this.invoice.id && this.invoiceForm.dirty) {
+        this.invoiceService.updateInvoice(this.invoice, this.invoice.id).subscribe(
           (res) => {
             this.successInvoiceAdd(res.id);
           },
           error => console.error(error)
         );
       } else {
-        this.invoiceService.addInvoice(invoice).subscribe(
+        this.invoiceService.addInvoice(this.invoice).subscribe(
           (res) => {
             this.successInvoiceAdd(res.id);
-            invoice.items.forEach((item) => {
-              this.invoiceService.addInvoiceItems(item, res.id).subscribe((res) => {
-                console.log(res);
-              })
-            })
           },
           error => console.error(error)
         );

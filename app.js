@@ -206,73 +206,83 @@ app.route('/api/products/:product_id')
 // INVOICES API
 
 app.route('/api/invoices')
-    .get(function(req, res) {
-        Invoice.findAll().then(function(invoices) {
-            res.json(invoices);
-        })
+  .get(function(req, res) {
+    Invoice.findAll().then(function(invoices) {
+      res.json(invoices);
     })
-    .post(function(req, res) {
-        var invoice = Invoice.build(_.pick(req.body, ['customer_id', 'discount', 'total']));
-        invoice.save().then(function(invoice){
-            res.json(invoice);
-        });
+  })
+  .post(function(req, res) {
+    var invoice = Invoice.build(_.pick(req.body, ['customer_id', 'discount', 'total']));
+    invoice.save().then(function(invoice){
+      for(var item of req.body.items) {
+        var invoice_item = InvoiceItem.build(_.pick(item, ['product_id', 'quantity']));
+        invoice_item.set('invoice_id', invoice.id);
+        invoice_item.save();
+      }
+      res.json(invoice);
     });
+  });
 
 app.route('/api/invoices/:invoice_id')
-    .get(function(req, res) {
-        Invoice.findById(req.params.invoice_id).then(function(invoice) {
-            res.json(invoice);
-        });
-    })
-    .put(function(req, res) {
-        Invoice.findById(req.params.invoice_id).then(function(invoice) {
-            invoice.update(_.pick(req.body, ['customer_id', 'discount', 'total'])).then(function(invoice) {
-                res.json(invoice);
-            });
-        });
-    })
-    .delete(function(req, res) {
-        Invoice.findById(req.params.invoice_id).then(function(invoice) {
-            invoice.destroy().then(function(invoice) {
-                res.json(invoice);
-            });
-        });
+  .get(function(req, res) {
+    Invoice.findById(req.params.invoice_id).then(function(invoice) {
+      res.json(invoice);
     });
+  })
+  .put(function(req, res) {
+    Invoice.findById(req.params.invoice_id).then(function(invoice) {
+      invoice.update(_.pick(req.body, ['customer_id', 'discount', 'total'])).then(function(invoice) {
+        res.json(invoice);
+      });
+    });
+  })
+  .delete(function(req, res) {
+    Invoice.findById(req.params.invoice_id).then(function(invoice) {
+      InvoiceItem.findAll({where: { invoice_id: invoice.id }}).then(function(invoice_items) {
+        for(var item of invoice_items) {
+          InvoiceItem.findById(item.id).then(function(invoice_item) {
+            invoice_item.destroy();
+          });
+        }
+      });
+      invoice.destroy().then(function(invoice) {
+        res.json(invoice);
+      });
+    });
+  });
 
 
 // INVOICE ITEMS API
 
 app.route('/api/invoices/:invoice_id/items')
-    .get(function(req, res) {
-        InvoiceItem.findAll({where: { invoice_id: req.params.invoice_id }}).then(function(invoice_items) {
-            res.json(invoice_items);
-        })
+  .get(function(req, res) {
+    InvoiceItem.findAll({where: { invoice_id: req.params.invoice_id }}).then(function(invoice_items) {
+      res.json(invoice_items);
     })
-    .post(function(req, res) {
-        var invoice_item = InvoiceItem.build(_.pick(req.body, ['product_id', 'quantity']));
-        invoice_item.set('invoice_id', req.params.invoice_id);
-        invoice_item.save().then(function(invoice_item){
-            res.json(invoice_item);
-        });
+  })
+  .post(function(req, res) {
+    var invoice_item = InvoiceItem.build(_.pick(req.body, ['product_id', 'quantity']));
+    invoice_item.set('invoice_id', req.params.invoice_id);
+    invoice_item.save().then(function(invoice_item){
+      res.json(invoice_item);
     });
+  });
 
 app.route('/api/invoices/:invoice_id/items/:id')
-    .get(function(req, res) {
-        InvoiceItem.findById(req.params.id).then(function(invoice_item) {
-            res.json(invoice_item);
-        });
-    })
-    .put(function(req, res) {
-
-        InvoiceItem.findById(req.params.id).then(function(invoice_item) {
+  .get(function(req, res) {
+    InvoiceItem.findById(req.params.id).then(function(invoice_item) {
+      res.json(invoice_item);
+    });
+  })
+  .put(function(req, res) {
+    InvoiceItem.findById(req.params.id).then(function(invoice_item) {
       invoice_item.update(_.pick(req.body, ['product_id', 'quantity'])).then(function(invoice_item) {
         res.json(invoice_item);
       });
     });
   })
   .delete(function(req, res) {
-        console.log(req.params);
-        InvoiceItem.findById(req.params.id).then(function(invoice_item) {
+    InvoiceItem.findById(req.params.id).then(function(invoice_item) {
       invoice_item.destroy().then(function(invoice_item) {
         res.json(invoice_item);
       });
