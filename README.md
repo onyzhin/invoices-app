@@ -23,6 +23,10 @@
 ###### Viewing the application in your browser
 `http://localhost:8000`
 
+
+####### Run develop version
+`npm start`
+
 # Schema
 
 ## Customers
