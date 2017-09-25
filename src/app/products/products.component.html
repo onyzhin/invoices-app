@@ -13,13 +13,13 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let product of products">
+  <tr *ngFor="let product of products; let i = index">
     <th scope="row">{{product.id}}</th>
     <td>{{product.name}}</td>
     <td>{{product.price | currency:'USD':true}}</td>
     <td class="text-right nowrap">
       <button type="button" class="btn btn-success btn-sm"
-              (click)="editProduct(product.id)">
+              (click)="editProduct(product, i)">
         <i class="fa fa-edit"></i>
       </button>
       <button type="button" class="btn btn-danger btn-sm"

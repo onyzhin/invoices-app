@@ -31,4 +31,12 @@ export class ProductsService {
       .map((res: Response) => res.json());
   }
 
+  updateProduct(product, id): Observable<any> {
+    const url = `api/products/${id}`;
+    const body = JSON.stringify(product);
+    return this.http
+      .put(url, body, this.options)
+      .map((res: Response) => res.json());
+  }
+
 }

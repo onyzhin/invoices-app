@@ -18,6 +18,7 @@ import { ProductsAddComponent } from './products/products-select/products-select
 import { InvoicesCreateComponent } from './invoices/invoices-create/invoices-create.component';
 import { InvoicesService } from './invoices/invoices.service';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { ProductsEditComponent } from './products/products-edit/products-edit.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     InvoicesComponent,
     ProductsAddComponent,
     InvoicesCreateComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProductsEditComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,8 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     ModalService,
   ],
   entryComponents: [
-    ProductsAddComponent
+    ProductsAddComponent,
+    ProductsEditComponent
   ],
   bootstrap: [AppComponent]
 })
