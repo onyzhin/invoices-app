@@ -7,7 +7,7 @@
 - npm
 - angular@4.2.4
 - angular-cli@1.4.3
-- bootstrap@4.0.0-alpha.6 (very latest version)
+- bootstrap@4.0.0-alpha.6
 
 # Getting Started
 
