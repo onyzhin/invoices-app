@@ -9,6 +9,9 @@
 ###### Install npm dependencies
 `npm install`
 
+###### Build project
+`npm run build`
+
 ###### Run the node server
 `node app.js`
 
