@@ -3,6 +3,9 @@
 - sqlite3
 - node
 - npm
+- angular@4.2.4
+- angular-cli@1.4.3
+- bootstrap@4.0.0-alpha.6 (very latest version)
 
 # Getting Started
 
@@ -10,7 +13,7 @@
 `npm install`
 
 ###### Build project
-`npm run build`
+`ng build`
 
 ###### Run the node server
 `node app.js`
