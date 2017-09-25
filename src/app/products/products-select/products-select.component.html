@@ -1,0 +1,28 @@
+<div class="products-list">
+  <table class="table">
+    <tbody>
+    <tr>
+      <td>#</td>
+      <td>
+        <input type="text" class="form-control" placeholder="Product name">
+      </td>
+      <td>
+        <input type="number" class="form-control" placeholder="Product price">
+      </td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm" (click)="addProduct()">
+          <i class="fa fa-plus text-light"></i>
+        </button>
+      </td>
+    </tr>
+    <tr *ngFor="let product of products"
+        (click)="selectProducts(product)"
+        [ngClass]="{'bg-success selected': product.selected}">
+      <td>{{product.id}}</td>
+      <td>{{product.name}}</td>
+      <td>{{product.price | currency:'USD':true}}</td>
+      <td><i class="fa fa-check"></i></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

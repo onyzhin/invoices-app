@@ -1,0 +1,33 @@
+.products-list {
+}
+
+.table {
+  height: 100%;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.table tr:hover td {
+  background-color: rgba(40, 167, 69, 0.04);
+}
+
+.table tr:hover .fa-check {
+  visibility: visible;
+  color: rgba(0, 0, 0, 0.15);
+}
+
+.table .fa-check {
+  visibility: hidden;
+}
+
+.table .selected td {
+  color: #fff;
+}
+
+.table tr.selected:hover .fa-check,
+.table .selected .fa-check {
+  color: #fff;
+  visibility: visible;
+}

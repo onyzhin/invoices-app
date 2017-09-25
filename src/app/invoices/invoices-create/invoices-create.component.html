@@ -1,0 +1,66 @@
+<div class="invoice">
+  <div class="invoice-body">
+    <h2 *ngIf="!isEditable">Create Invoice <span *ngIf="invoice.id">#{{invoice?.id}}</span></h2>
+    <h2 *ngIf="isEditable">Invoice #{{invoice?.id}}</h2>
+    <form [formGroup]="invoiceForm" novalidate>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Discount: </label>
+        <div class="col-sm-10">
+          <ion-range-slider #sliderElement
+                            min="0"
+                            max="100"
+                            from="{{invoice.discount}}"
+                            postfix="%"
+                            (onFinish)="slideOnFinish($event)"></ion-range-slider>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Customer: </label>
+        <div class="col-sm-10">
+          <select class="custom-select" formControlName="customer" [(ngModel)]="invoice.customer_id">
+            <option value="-1" *ngIf="!customers.length">Loading...</option>
+            <option value="{{customer.id}}" *ngFor="let customer of customers">{{customer.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-2 col-form-label">
+          <label>Products</label>
+        </div>
+        <div class="col-sm-10">
+          <div class="form-group">
+            <button type="button" class="btn btn-primary btn-sm" (click)="showProducts()">
+              Select Products &nbsp; <i class="fa fa-plus"></i></button>
+          </div>
+          <div class="form-group">
+            <table class="table">
+              <tbody>
+              <tr *ngFor="let item of invoice.items; let i = index">
+                <td>{{item.name}}</td>
+                <td>{{item.price | currency:'USD':true}}</td>
+                <td>
+                  <input type="number" class="form-control"
+                         placeholder="1"
+                         min="1"
+                         formControlName="quantity{{item.id}}"
+                         [(ngModel)]="item.quantity">
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-danger btn-sm"
+                          (click)="removeItem(item)">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                </td>
+              </tr>
+              <tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="invoice-footer bg-inverse text-light">
+    <h6>Total: {{totalInvoice || invoice.total | currency:'USD':true}}</h6>
+    <p class="push-right" *ngIf="isUpdating">saving...</p>
+  </div>
+</div>

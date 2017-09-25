@@ -1,0 +1,23 @@
+<h2>Customers</h2>
+
+<div class="text-left text-secondary" *ngIf="!customers.length">
+  <p>You have no customers yet</p>
+</div>
+<table class="table" *ngIf="customers.length">
+  <thead class="thead-inverse">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Phone</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let customer of customers">
+    <th scope="row">{{customer.id}}</th>
+    <td>{{customer.name}}</td>
+    <td>{{customer.address}}</td>
+    <td>{{customer.phone}}</td>
+  </tr>
+  </tbody>
+</table>

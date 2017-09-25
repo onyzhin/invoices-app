@@ -1,0 +1,25 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~font-awesome/css/font-awesome.css";
+
+body {
+  padding-top: 5em;
+}
+
+.text-light {
+  color: #f8f9fa!important;
+}
+
+.text-secondary {
+  color: #868e96!important;
+}
+
+.modal.show .modal-dialog {
+  transition: 0.25s all;
+  opacity: 0;
+  transform: translate(0, 5vh);
+}
+
+.modal.custom-show .modal-dialog {
+  opacity: 1;
+  transform: translate(0, 0);
+}

@@ -1,0 +1,38 @@
+<h2>Invoices
+  <button type="button" class="btn btn-primary btn-sm" (click)="createInvoice()">
+    Add Invoice &nbsp; <i class="fa fa-plus"></i>
+  </button>
+</h2>
+
+<div class="text-left text-secondary" *ngIf="!invoices.length">
+  <p>You have no invoices yet</p>
+</div>
+<table class="table" *ngIf="invoices.length">
+  <thead class="thead-inverse">
+  <tr>
+    <th>ID</th>
+    <th>Customer</th>
+    <th>Discount</th>
+    <th>Total</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let invoice of invoices">
+    <th scope="row">{{invoice.id}}</th>
+    <td>{{invoice.customer_id}}</td>
+    <td>{{invoice.discount}} %</td>
+    <td>{{invoice.total | currency:'USD':true}}</td>
+    <td class="text-right nowrap">
+      <button type="button" class="btn btn-success btn-sm"
+              (click)="editInvoice(invoice.id)">
+        <i class="fa fa-edit"></i>
+      </button>
+      <button type="button" class="btn btn-danger btn-sm"
+              (click)="removeInvoice(invoice.id)">
+        <i class="fa fa-trash-o"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>

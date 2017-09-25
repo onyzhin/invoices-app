@@ -1,0 +1,32 @@
+<h2>Products</h2>
+
+<div class="text-left text-secondary" *ngIf="!products.length">
+  <p>You have no products yet</p>
+</div>
+<table class="table" *ngIf="products.length">
+  <thead class="thead-inverse">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Price</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let product of products">
+    <th scope="row">{{product.id}}</th>
+    <td>{{product.name}}</td>
+    <td>{{product.price | currency:'USD':true}}</td>
+    <td class="text-right nowrap">
+      <button type="button" class="btn btn-success btn-sm"
+              (click)="editProduct(product.id)">
+        <i class="fa fa-edit"></i>
+      </button>
+      <button type="button" class="btn btn-danger btn-sm"
+              (click)="removeProduct(product.id)">
+        <i class="fa fa-trash-o"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
